@@ -1,9 +1,10 @@
 #include "aircrafts_array.h"
 #include "return_codes.h"
 
-#define INPUT_PROMPT "Enter information about aircrafts. " \
-                      "The end of the input is the key combination CTRL+D.\n\n" \
-                      "Input format:\nbrand\nmodel\npurpose\ncrew size\nflight range\n\n"
+#define INPUT_PROMPT                                        \
+  "Enter information about aircrafts. "                     \
+  "The end of the input is the key combination CTRL+D.\n\n" \
+  "Input format:\nbrand\nmodel\npurpose\ncrew size\nflight range\n\n"
 
 static return_code_t aircrafts_process(void);
 
