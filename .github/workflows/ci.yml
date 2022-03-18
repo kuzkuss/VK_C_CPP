@@ -34,14 +34,18 @@ jobs:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     needs: [buildcheck]
     steps:
-      - uses: actions/checkout@v2
-      - uses: codecov/codecov-action@v2
-      - run: cmake -B build -DTESTING=ON -DCOVERAGE=ON
-      - run: make -C build test
-      - run: apt install -y gcovr
-      - run: gcovr -r . -x -o ./build/gcovrrep.xml
-      - token: ${{ secrets.CODECOV_TOKEN }} 
-      - files: gcovrrep.xml
+    - name: Fetch
+      uses: actions/checkout@master
+    - name: Test
+      run: cmake -B build -DTESTING=ON -DCOVERAGE=ON
+      run: make -C build test
+      run: gcovr -r . -x -o ./build/gcovrrep.xml
+    - name: Upload
+      uses: codecov/codecov-action@v2
+      run: apt install -y gcovr
+      with:
+        files: gcovrrep.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
 
   sanitizers:
     runs-on: ubuntu-latest
