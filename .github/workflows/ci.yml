@@ -35,10 +35,13 @@ jobs:
     needs: [buildcheck]
     steps:
       - uses: actions/checkout@v2
+      - uses: codecov/codecov-action@v2
       - run: cmake -B build -DTESTING=ON -DCOVERAGE=ON
       - run: make -C build test
-      - run: lcov -t "project/tests/tests_aircrafts" -o coverage.info -c -d project/aircrafts_lib
-      - run: genhtml -o report coverage.info
+      - run: gcovr -r . -x -o ./build/gcovrrep.xml
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} 
+          files: gcovrrep.xml
 
   sanitizers:
     runs-on: ubuntu-latest
