@@ -1,0 +1,2 @@
+/usr/bin/ar qc libaircrafts_lib.a  CMakeFiles/aircrafts_lib.dir/aircraft.c.o CMakeFiles/aircrafts_lib.dir/aircrafts_array.c.o
+/usr/bin/ranlib libaircrafts_lib.a

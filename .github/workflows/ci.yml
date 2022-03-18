@@ -1,0 +1,69 @@
+on: push
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir build
+      - run: cd build
+      - run: cmake ..
+      - run: cmake --build . --target check
+
+  build:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [check]
+    steps:
+    - uses: actions/checkout@v2
+    - run: mkdir build
+    - run: cd build
+    - run: cmake -DLINTERS=OFF -DWITH_MEMCHECK=OFF ..
+    - run: cmake --build .
+
+  buildcheck:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [build]
+    steps:
+    - uses: actions/checkout@v2
+    - run: mkdir build
+    - run: cd build
+    - run: cmake -DLINTERS=OFF -DWITH_MEMCHECK=OFF ..
+    - run: scan-build cmake --build .
+    - run: infer -- cmake --build .
+
+  test:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [buildcheck]
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir build
+      - run: cd build
+      - run: cmake -DTESTING=ON -DCOVERAGE=ON ..
+      - run: cmake --build . --target test
+
+  sanitizers:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir build
+      - run: cd build
+      - run: cmake -DSANITIZERS=ON -DTESTING=ON ..
+      - run: cmake --build . --target test
+
+  memtest:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [sanitizers]
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir build
+      - run: cd build
+      - run: cmake ..
+      - run: cmake --build . --target test
+
