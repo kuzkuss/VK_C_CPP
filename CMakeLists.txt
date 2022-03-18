@@ -30,7 +30,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${AIRCRAFTS_LIB_LIBRARIES})
 add_subdirectory(project/tests)
 
 if(WITH_MEMCHECK)
-    add_custom_target(memcheck ALL COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/memtest.sh ${CMAKE_CURRENT_SOURCE_DIR}/build/project/tests/tests)
+    add_custom_target(memcheck ALL COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/memtest.sh
+                                            ${CMAKE_CURRENT_SOURCE_DIR}/build/project/tests/tests
+                                    DEPENDS tests)
 endif(WITH_MEMCHECK)
 
 if(TESTING)

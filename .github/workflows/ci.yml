@@ -26,12 +26,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: apt install -y clang-tools
-    - run: apt install -y opam
-    - run: git clone https://github.com/facebook/infer.git
-    - run: cd infer && ./build-infer.sh clang && make install
     - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
     - run: scan-build make -C build
-    - run: infer -- make -C build
 
   test:
     runs-on: ubuntu-latest

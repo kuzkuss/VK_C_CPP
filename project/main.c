@@ -1,7 +1,11 @@
 #include "aircrafts_array.h"
 #include "return_codes.h"
 
-int main(void) {
+static return_code_t aircrafts_process(void);
+
+int main(void) { return aircrafts_process(); }
+
+static return_code_t aircrafts_process(void) {
   aircrafts_array_t *aircrafts_array = NULL;
   return_code_t rc = read_array(stdin, stdout, &aircrafts_array);
   if (rc != OK) {
