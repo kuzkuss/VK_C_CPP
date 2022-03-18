@@ -6,6 +6,7 @@ jobs:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
+      - run: sudo apt install -y clang-format
       - run: cmake -B build
       - run: make -C build check
 
