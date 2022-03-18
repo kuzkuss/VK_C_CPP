@@ -26,8 +26,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: apt install -y clang-tools
-    - run: VERSION=0.XX.Y; curl -sSL "https://github.com/facebook/infer/releases/download/v1.1.0/infer-linux64-v1.1.0.tar.xz"\
-            \ | tar -C /opt -xJ && ln -s "/opt/infer-linux64-v1.1.0/bin/infer" /usr/local/bin/infer
+    - run: git clone https://github.com/facebook/infer.git
+    - run: cd infer && ./build-infer.sh clang && make install
     - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
     - run: scan-build make -C build
     - run: infer -- make -C build
