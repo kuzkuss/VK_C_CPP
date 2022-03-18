@@ -6,11 +6,8 @@ jobs:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir build
-      - run: cd build
-      - run: ls
-      - run: cmake ..
-      - run: cmake --build . --target check
+      - run: cmake -B build
+      - run: make -C build check
 
   build:
     runs-on: ubuntu-latest
@@ -18,10 +15,8 @@ jobs:
     needs: [check]
     steps:
     - uses: actions/checkout@v2
-    - run: mkdir build
-    - run: cd build
-    - run: cmake -DLINTERS=OFF -DWITH_MEMCHECK=OFF ..
-    - run: cmake --build .
+    - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+    - run: make -C build
 
   buildcheck:
     runs-on: ubuntu-latest
@@ -29,11 +24,9 @@ jobs:
     needs: [build]
     steps:
     - uses: actions/checkout@v2
-    - run: mkdir build
-    - run: cd build
-    - run: cmake -DLINTERS=OFF -DWITH_MEMCHECK=OFF ..
-    - run: scan-build cmake --build .
-    - run: infer -- cmake --build .
+    - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+    - run: scan-build make -C build
+    - run: infer -- make -C build
 
   test:
     runs-on: ubuntu-latest
@@ -41,10 +34,8 @@ jobs:
     needs: [buildcheck]
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir build
-      - run: cd build
-      - run: cmake -DTESTING=ON -DCOVERAGE=ON ..
-      - run: cmake --build . --target test
+      - run: cmake -B build -DTESTING=ON -DCOVERAGE=ON
+      - run: make -C build test
 
   sanitizers:
     runs-on: ubuntu-latest
@@ -52,10 +43,8 @@ jobs:
     needs: [test]
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir build
-      - run: cd build
-      - run: cmake -DSANITIZERS=ON -DTESTING=ON ..
-      - run: cmake --build . --target test
+      - run: cmake -B build -DSANITIZERS=ON -DTESTING=ON
+      - run: make -C build test
 
   memtest:
     runs-on: ubuntu-latest
@@ -63,8 +52,6 @@ jobs:
     needs: [sanitizers]
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir build
-      - run: cd build
-      - run: cmake ..
-      - run: cmake --build . --target memcheck
+      - run: cmake -B build
+      - run: make -C build memcheck
 
