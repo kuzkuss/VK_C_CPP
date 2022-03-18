@@ -25,6 +25,7 @@ jobs:
     needs: [build]
     steps:
     - uses: actions/checkout@v2
+    - run: apt install -y clang-tools
     - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
     - run: scan-build make -C build
     - run: infer -- make -C build
