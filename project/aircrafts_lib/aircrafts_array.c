@@ -18,10 +18,6 @@ return_code_t read_array(FILE *input_stream, FILE *output_stream,
     return INCORRECT_ARGS;
   }
 
-  fprintf(output_stream,
-          "Enter information about aircrafts. "
-          "The end of the input is the key combination CTRL+D.\n\n");
-
   return_code_t rc = OK;
 
   *aircrafts_array = create_array();

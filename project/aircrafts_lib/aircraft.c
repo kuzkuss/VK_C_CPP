@@ -27,7 +27,6 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
   double flight_range = 0.0;
 
   size_t n = 0;
-  fprintf(output_stream, "\nEnter aircraft brand: ");
   if (getline(&brand, &n, input_stream) == GETLINE_ERROR || brand[0] == '\n' ||
       brand[0] == '\r') {
     free(brand);
@@ -35,7 +34,6 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
   }
 
   n = 0;
-  fprintf(output_stream, "Enter aircraft model: ");
   if (getline(&model, &n, input_stream) == GETLINE_ERROR || model[0] == '\n' ||
       model[0] == '\r') {
     free(brand);
@@ -44,8 +42,6 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
   }
 
   n = 0;
-  fprintf(output_stream,
-          "Enter the purpose of the aircraft (cargo, passenger and etc): ");
   if (getline(&purpose, &n, input_stream) == GETLINE_ERROR ||
       purpose[0] == '\n' || purpose[0] == '\r') {
     free(brand);
@@ -55,9 +51,7 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
   }
 
   return_code_t rc = OK;
-  fprintf(output_stream, "Enter the number of aircraft crew: ");
   if (fscanf(input_stream, "%d", &crew) == 1 && crew > 0) {
-    fprintf(output_stream, "Enter the flight range of the aircraft: ");
     if (fscanf(input_stream, "%lf", &flight_range) == 1 && flight_range > 0.0) {
       *p_aircraft = create_aircraft(brand, model, purpose, crew, flight_range);
       if (!(*p_aircraft)) {
