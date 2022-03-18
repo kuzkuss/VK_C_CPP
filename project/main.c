@@ -11,7 +11,7 @@ int main(void) { return aircrafts_process(); }
 
 static return_code_t aircrafts_process(void) {
   aircrafts_array_t *aircrafts_array = NULL;
-  printf(INPUT_PROMPT);
+  printf("%s", INPUT_PROMPT);
   return_code_t rc = read_array(stdin, stdout, &aircrafts_array);
   if (rc != OK) {
     return rc;

@@ -11,6 +11,9 @@
 #define GETLINE_ERROR -1
 #define EPS 1e-07
 
+#define EOL_N '\n'
+#define EOL_R '\r'
+
 static aircraft_t *create_aircraft(char *brand, char *model, char *purpose,
                                    int crew, double flight_range);
 
@@ -27,15 +30,15 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
   double flight_range = 0.0;
 
   size_t n = 0;
-  if (getline(&brand, &n, input_stream) == GETLINE_ERROR || brand[0] == '\n' ||
-      brand[0] == '\r') {
+  if (getline(&brand, &n, input_stream) == GETLINE_ERROR || brand[0] == EOL_N ||
+      brand[0] == EOL_R) {
     free(brand);
     return INPUT_ERROR;
   }
 
   n = 0;
-  if (getline(&model, &n, input_stream) == GETLINE_ERROR || model[0] == '\n' ||
-      model[0] == '\r') {
+  if (getline(&model, &n, input_stream) == GETLINE_ERROR || model[0] == EOL_N ||
+      model[0] == EOL_R) {
     free(brand);
     free(model);
     return INPUT_ERROR;
@@ -43,7 +46,7 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
 
   n = 0;
   if (getline(&purpose, &n, input_stream) == GETLINE_ERROR ||
-      purpose[0] == '\n' || purpose[0] == '\r') {
+      purpose[0] == EOL_N || purpose[0] == EOL_R) {
     free(brand);
     free(model);
     free(purpose);
@@ -52,6 +55,7 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
 
   return_code_t rc = OK;
   if (fscanf(input_stream, "%d", &crew) == 1 && crew > 0) {
+
     if (fscanf(input_stream, "%lf", &flight_range) == 1 && flight_range > 0.0) {
       *p_aircraft = create_aircraft(brand, model, purpose, crew, flight_range);
       if (!(*p_aircraft)) {
