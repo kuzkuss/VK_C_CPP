@@ -55,7 +55,6 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
 
   return_code_t rc = OK;
   if (fscanf(input_stream, "%d", &crew) == 1 && crew > 0) {
-
     if (fscanf(input_stream, "%lf", &flight_range) == 1 && flight_range > 0.0) {
       *p_aircraft = create_aircraft(brand, model, purpose, crew, flight_range);
       if (!(*p_aircraft)) {
