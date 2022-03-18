@@ -1,5 +1,5 @@
-#ifndef TP_C_CPP_PROJECT_AIRCRAFTS_LIB_AIRCRAFTS_ARRAY_H_
-#define TP_C_CPP_PROJECT_AIRCRAFTS_LIB_AIRCRAFTS_ARRAY_H_
+#ifndef PROJECT_AIRCRAFTS_LIB_AIRCRAFTS_ARRAY_H_
+#define PROJECT_AIRCRAFTS_LIB_AIRCRAFTS_ARRAY_H_
 
 #include "aircraft.h"
 
@@ -16,4 +16,4 @@ void print_array(const aircrafts_array_t *array, FILE *output_stream);
 void sort_by_flight_range(aircrafts_array_t *array);
 void group_by_brand(aircrafts_array_t *array);
 
-#endif  // TP_C_CPP_PROJECT_AIRCRAFTS_LIB_AIRCRAFTS_ARRAY_H_
+#endif  // PROJECT_AIRCRAFTS_LIB_AIRCRAFTS_ARRAY_H_

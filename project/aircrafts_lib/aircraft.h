@@ -1,5 +1,5 @@
-#ifndef TP_C_CPP_PROJECT_AIRCRAFTS_LIB_AIRCRAFT_H_
-#define TP_C_CPP_PROJECT_AIRCRAFTS_LIB_AIRCRAFT_H_
+#ifndef PROJECT_AIRCRAFTS_LIB_AIRCRAFT_H_
+#define PROJECT_AIRCRAFTS_LIB_AIRCRAFT_H_
 
 #include <stdio.h>
 
@@ -18,4 +18,4 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
                             aircraft_t **p_aircraft);
 void print_aircraft(const aircraft_t *aircraft, FILE *output_stream);
 
-#endif  // TP_C_CPP_PROJECT_AIRCRAFTS_LIB_AIRCRAFT_H_
+#endif  // PROJECT_AIRCRAFTS_LIB_AIRCRAFT_H_
