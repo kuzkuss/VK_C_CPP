@@ -40,12 +40,12 @@ jobs:
       run: |
         cmake -B build -DTESTING=ON -DCOVERAGE=ON
         make -C build test
-        apt install -y gcovr
-        gcovr -r . -x -o ./build/gcovrrep.xml
+        apt-get install -y gcovr
+        gcovr -x -o ./build/coverage_report.xml
     - name: Upload
       uses: codecov/codecov-action@v2
       with:
-        files: gcovrrep.xml
+        files: coverage_report.xml
         token: ${{ secrets.CODECOV_TOKEN }}
 
   sanitizers:
