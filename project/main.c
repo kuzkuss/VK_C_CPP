@@ -1,8 +1,8 @@
 #include "aircrafts_array.h"
 #include "return_codes.h"
 
-#define INPUT_PROMPT "Enter information about aircrafts. "
-                      "The end of the input is the key combination CTRL+D.\n\n"
+#define INPUT_PROMPT "Enter information about aircrafts. " \
+                      "The end of the input is the key combination CTRL+D.\n\n" \
                       "Input format:\nbrand\nmodel\npurpose\ncrew size\nflight range\n\n"
 
 static return_code_t aircrafts_process(void);
@@ -11,7 +11,7 @@ int main(void) { return aircrafts_process(); }
 
 static return_code_t aircrafts_process(void) {
   aircrafts_array_t *aircrafts_array = NULL;
-  fprintf(output_stream, INPUT_PROMPT);
+  printf(INPUT_PROMPT);
   return_code_t rc = read_array(stdin, stdout, &aircrafts_array);
   if (rc != OK) {
     return rc;
