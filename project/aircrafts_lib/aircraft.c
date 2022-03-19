@@ -29,23 +29,23 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
   int crew = 0;
   double flight_range = 0.0;
 
-  size_t n = 0;
-  if (getline(&brand, &n, input_stream) == GETLINE_ERROR || brand[0] == EOL_N ||
+  size_t size_buf = 0;
+  if (getline(&brand, &size_buf, input_stream) == GETLINE_ERROR || brand[0] == EOL_N ||
       brand[0] == EOL_R) {
     free(brand);
     return INPUT_ERROR;
   }
 
-  n = 0;
-  if (getline(&model, &n, input_stream) == GETLINE_ERROR || model[0] == EOL_N ||
+  size_buf = 0;
+  if (getline(&model, &size_buf, input_stream) == GETLINE_ERROR || model[0] == EOL_N ||
       model[0] == EOL_R) {
     free(brand);
     free(model);
     return INPUT_ERROR;
   }
 
-  n = 0;
-  if (getline(&purpose, &n, input_stream) == GETLINE_ERROR ||
+  size_buf = 0;
+  if (getline(&purpose, &size_buf, input_stream) == GETLINE_ERROR ||
       purpose[0] == EOL_N || purpose[0] == EOL_R) {
     free(brand);
     free(model);
