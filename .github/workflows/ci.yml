@@ -45,7 +45,6 @@ jobs:
         apt-get install -y gcovr
         gcovr -x -o ./build/coverage_report.xml
     - name: Upload
-      CODECOV_TOKEN=81ca858b-d5ea-41bf-96f3-2db485fada4d
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
