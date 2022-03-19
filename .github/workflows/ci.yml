@@ -1,4 +1,3 @@
-CODECOV_TOKEN=81ca858b-d5ea-41bf-96f3-2db485fada4d
 on: push
 
 jobs:
@@ -48,7 +47,7 @@ jobs:
     - name: Upload
       uses: codecov/codecov-action@v2
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+        token: ${{ secrets.81ca858b-d5ea-41bf-96f3-2db485fada4d }}
         files: coverage_report.xml
         
 
