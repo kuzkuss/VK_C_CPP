@@ -30,15 +30,15 @@ return_code_t read_aircraft(FILE *input_stream, FILE *output_stream,
   double flight_range = 0.0;
 
   size_t size_buf = 0;
-  if (getline(&brand, &size_buf, input_stream) == GETLINE_ERROR || brand[0] == EOL_N ||
-      brand[0] == EOL_R) {
+  if (getline(&brand, &size_buf, input_stream) == GETLINE_ERROR ||
+      brand[0] == EOL_N || brand[0] == EOL_R) {
     free(brand);
     return INPUT_ERROR;
   }
 
   size_buf = 0;
-  if (getline(&model, &size_buf, input_stream) == GETLINE_ERROR || model[0] == EOL_N ||
-      model[0] == EOL_R) {
+  if (getline(&model, &size_buf, input_stream) == GETLINE_ERROR ||
+      model[0] == EOL_N || model[0] == EOL_R) {
     free(brand);
     free(model);
     return INPUT_ERROR;
