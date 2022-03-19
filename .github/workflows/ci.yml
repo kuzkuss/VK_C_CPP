@@ -1,3 +1,4 @@
+CODECOV_TOKEN=81ca858b-d5ea-41bf-96f3-2db485fada4d
 on: push
 
 jobs:
