@@ -6,6 +6,11 @@ typedef enum {
   INCORRECT_ARGS,
   INPUT_ERROR,
   ALLOCATION_ERROR,
+  KEY_ERROR,
+  FILE_ERROR,
+  CALL_HELP
 } return_code_t;
+
+void check_error(int rc);
 
 #endif  // PROJECT_AIRCRAFTS_LIB_RETURN_CODES_H_

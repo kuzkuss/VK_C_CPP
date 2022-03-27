@@ -1,0 +1,1 @@
+/usr/bin/cc  -std=c11 -Wall -Wextra -Werror -Wpedantic   CMakeFiles/hw2.dir/project/src/main.c.o CMakeFiles/hw2.dir/project/src/utils.c.o  -o hw2  project/posts_lib/libposts_lib.a 
