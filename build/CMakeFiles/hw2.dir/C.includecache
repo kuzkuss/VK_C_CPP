@@ -26,6 +26,12 @@ post.h
 
 ../project/posts_lib/inc/return_codes.h
 
+/home/anastasia/tp_c_cpp/project/src/main.c
+utils.h
+/home/anastasia/tp_c_cpp/project/src/utils.h
+stdio.h
+-
+
 /home/anastasia/tp_c_cpp/project/src/utils.c
 getopt.h
 -

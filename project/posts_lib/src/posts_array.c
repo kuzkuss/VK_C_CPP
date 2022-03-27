@@ -26,17 +26,16 @@ return_code_t read_array(FILE *input_stream, posts_array_t **posts_array) {
   }
 
   post_t *post = NULL;
-  while (!feof(input_stream)) {
-    printf("1");
-    post = NULL;
-    rc = read_post(input_stream, &post);
-    if (rc != OK) {
-      break;
-    }
+  while (!(rc = read_post(input_stream, &post))) {
     rc = append(*posts_array, post);
     if (rc != OK) {
       break;
     }
+    post = NULL;
+  }
+
+  if (feof(input_stream)) {
+    rc = OK;
   }
 
   if ((*posts_array)->size == 0) {

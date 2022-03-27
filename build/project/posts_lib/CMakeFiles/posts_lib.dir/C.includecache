@@ -12,19 +12,7 @@ stdio.h
 return_codes.h
 ../project/posts_lib/inc/return_codes.h
 
-../project/posts_lib/inc/posts_array.h
-post.h
-../project/posts_lib/inc/post.h
-
 ../project/posts_lib/inc/return_codes.h
-
-/home/anastasia/tp_c_cpp/project/posts_lib/src/count/sequential_count.c
-stdbool.h
--
-time.h
--
-posts_array.h
-/home/anastasia/tp_c_cpp/project/posts_lib/src/count/posts_array.h
 
 /home/anastasia/tp_c_cpp/project/posts_lib/src/post.c
 post.h
@@ -32,22 +20,6 @@ post.h
 stdio.h
 -
 stdlib.h
--
-return_codes.h
-/home/anastasia/tp_c_cpp/project/posts_lib/src/return_codes.h
-
-/home/anastasia/tp_c_cpp/project/posts_lib/src/posts_array.c
-posts_array.h
-/home/anastasia/tp_c_cpp/project/posts_lib/src/posts_array.h
-stdlib.h
--
-unistd.h
--
-post.h
-/home/anastasia/tp_c_cpp/project/posts_lib/src/post.h
-
-/home/anastasia/tp_c_cpp/project/posts_lib/src/return_codes.c
-stdio.h
 -
 return_codes.h
 /home/anastasia/tp_c_cpp/project/posts_lib/src/return_codes.h

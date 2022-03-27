@@ -36,38 +36,9 @@ return_code_t read_post(FILE *input_stream, post_t **p_post) {
   int id = 0;
   date_t date = { 0 };
 
-  if (fscanf(input_stream, "%d", &id) != 1) {
-    printf("1");
+  if (fscanf(input_stream, "%d%f%zu%hhu.%hhu.%hd%d", &id, &grade, &votes, &date.day, &date.month, &date.year, &last_grade) != 7) {
     return INPUT_ERROR;
   }
-  if (fscanf(input_stream, "%f", &grade) != 1) {
-    printf("2");
-    return INPUT_ERROR;
-  }
-  if (fscanf(input_stream, "%zu", &votes) != 1) {
-    printf("3");
-    return INPUT_ERROR;
-  }
-  if (fscanf(input_stream, "%hhu.", &date.day) != 1) {
-    printf("4");
-    return INPUT_ERROR;
-  }
-  if (fscanf(input_stream, "%hhu.", &date.month) != 1) {
-    printf("5");
-    return INPUT_ERROR;
-  }
-  if (fscanf(input_stream, "%hd", &date.year) != 1) {
-    printf("6");
-    return INPUT_ERROR;
-  }
-  if (fscanf(input_stream, "%d", &last_grade) != 1) {
-    printf("7");
-    return INPUT_ERROR;
-  }
-  // if (fscanf(input_stream, "%d%f%zu%hhu.%hhu.%hd%d", &id, &grade, &votes, &date.day, &date.month, &date.year, &last_grade) != 7) {
-  //   printf("1");
-  //   return INPUT_ERROR;
-  // }
 
   if (id < 0 || grade < NO_GRADES || grade > MAX_GRADE || (grade < MIN_GRADE && grade > NO_GRADES)) {
     return INPUT_ERROR;
