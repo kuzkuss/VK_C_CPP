@@ -1,5 +1,5 @@
-#ifndef PROJECT_POSTS_LIB_postS_ARRAY_H_
-#define PROJECT_POSTS_LIB_postS_ARRAY_H_
+#ifndef TP_C_CPP_PROJECT_POSTS_LIB_INC_POSTS_ARRAY_H_
+#define TP_C_CPP_PROJECT_POSTS_LIB_INC_POSTS_ARRAY_H_
 
 #include "post.h"
 
@@ -12,4 +12,4 @@ typedef struct {
 return_code_t read_array(FILE *input_stream, posts_array_t **posts_array);
 void free_array(posts_array_t *array);
 
-#endif  // PROJECT_POSTS_LIB_postS_ARRAY_H_
+#endif  // TP_C_CPP_PROJECT_POSTS_LIB_INC_POSTS_ARRAY_H_

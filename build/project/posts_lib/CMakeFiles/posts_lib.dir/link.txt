@@ -1,2 +1,0 @@
-/usr/bin/ar qc libposts_lib.a  CMakeFiles/posts_lib.dir/src/post.c.o CMakeFiles/posts_lib.dir/src/posts_array.c.o CMakeFiles/posts_lib.dir/src/return_codes.c.o CMakeFiles/posts_lib.dir/src/count/sequential_count.c.o
-/usr/bin/ranlib libposts_lib.a

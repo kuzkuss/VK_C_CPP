@@ -1,6 +1,0 @@
-/home/anastasia/tp_c_cpp/build/CMakeFiles/rebuild_cache.dir
-/home/anastasia/tp_c_cpp/build/CMakeFiles/edit_cache.dir
-/home/anastasia/tp_c_cpp/build/CMakeFiles/hw2.dir
-/home/anastasia/tp_c_cpp/build/project/posts_lib/CMakeFiles/rebuild_cache.dir
-/home/anastasia/tp_c_cpp/build/project/posts_lib/CMakeFiles/edit_cache.dir
-/home/anastasia/tp_c_cpp/build/project/posts_lib/CMakeFiles/posts_lib.dir

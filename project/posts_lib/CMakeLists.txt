@@ -5,9 +5,9 @@ file(GLOB SOURCES src/*.c)
 file(GLOB INCLUDE_DIRS inc)
 
 if(PARALLEL)
-    add_library(${PROJECT_NAME} ${SOURCES} src/count/parallel_count.c)
+    add_library(${PROJECT_NAME} SHARED ${SOURCES} src/count/parallel_count.c)
 else()
-    add_library(${PROJECT_NAME} ${SOURCES} src/count/sequential_count.c)
+    add_library(${PROJECT_NAME} STATIC ${SOURCES} src/count/sequential_count.c)
 endif()
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRS})

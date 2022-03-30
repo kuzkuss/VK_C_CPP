@@ -16,7 +16,11 @@ jobs:
     needs: [check]
     steps:
     - uses: actions/checkout@v2
+    - run: echo "***************************** BUILD SEQUENTIAL IMPLEMENTATION *****************************"
     - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+    - run: make -C build
+    - run: echo "****************************** BUILD PARALLEL IMPLEMENTATION ******************************"
+    - run: cmake -B build -DPARALLEL=ON
     - run: make -C build
 
   buildcheck:
@@ -26,7 +30,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: apt install -y clang-tools
+    - run: echo "************************** CHECK BUILD SEQUENTIAL IMPLEMENTATION **************************"
     - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+    - run: scan-build make -C build
+    - run: echo "*************************** CHECK BUILD PARALLEL IMPLEMENTATION ***************************"
+    - run: cmake -B build -DPARALLEL=ON
     - run: scan-build make -C build
 
   test:
@@ -38,17 +46,43 @@ jobs:
       uses: actions/checkout@master
       with:
           submodules: recursive
-    - name: Test
+    - name: Test sequential algorithm
       run: |
+        echo "**************************** TESTING SEQUENTIAL IMPLEMENTATION ****************************"
         cmake -B build -DTESTING=ON -DCOVERAGE=ON
         make -C build test
         apt-get install -y gcovr
-        gcovr -x -o ./build/coverage_report.xml
+        gcovr -x -o ./build/coverage_report_seq.xml
+    - name: Test parallel algorithm
+      run: |
+        echo "**************************** TESTING PARALLEL IMPLEMENTATION ****************************"
+        cmake -B build -DPARALLEL=ON
+        make -C build test
+        apt-get install -y gcovr
+        gcovr -x -o ./build/coverage_report_paral.xml
+    - name: Test time
+      run:
+        echo "****************************** TIME PARALLEL IMPLEMENTATION ******************************"
+        ./project/tests/create_big_data.py build/project/tests/data.txt 50000
+        ./build/project/tests/time_test -f data.txt
+        echo "***************************** TIME SEQUENTIAL IMPLEMENTATION *****************************"
+        cmake -B build -DPARALLEL=OFF -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+        make -C build
+        ./build/project/tests/time_test -f data.txt
+    - name: Stress Test
+      run:
+        echo "*************************************** STRESS TEST ***************************************"
+        project/tests/create_big_data.py build/project/tests/big_data.txt
+        ./build/hw2 -f build/project/tests/big_data.txt > out_sequential.txt
+        cmake -B build -DPARALLEL=ON
+        make -C build
+        ./build/hw2 -f build/project/tests/big_data.txt > out_parallel.txt
+        ./comparison.sh
     - name: Upload
       uses: codecov/codecov-action@v2
       with:
         token: 81ca858b-d5ea-41bf-96f3-2db485fada4d
-        files: coverage_report.xml
+        files: coverage_report_seq.xml coverage_report_paral.xml
         
 
   sanitizers:
@@ -57,7 +91,11 @@ jobs:
     needs: [test]
     steps:
       - uses: actions/checkout@v2
+      - run: echo "**************************** SANITIZE SEQUENTIAL IMPLEMENTATION ***************************"
       - run: cmake -B build -DSANITIZERS=ON -DTESTING=ON
+      - run: make -C build test
+      - run: echo "**************************** SANITIZE PARALLEL IMPLEMENTATION ***************************"
+      - run: cmake -B build -DPARALLEL=ON
       - run: make -C build test
 
   memtest:
@@ -66,6 +104,10 @@ jobs:
     needs: [sanitizers]
     steps:
       - uses: actions/checkout@v2
+      - run: echo "************************** MEMORY CHECK SEQUENTIAL IMPLEMENTATION *************************"
       - run: cmake -B build
+      - run: make -C build memcheck
+      - run: echo "*************************** MEMORY CHECK PARALLEL IMPLEMENTATION **************************"
+      - run: cmake -B build -DPARALLEL=ON
       - run: make -C build memcheck
 

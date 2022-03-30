@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "post.h"
-
 #define INIT_SIZE 8
 #define STEP 2
 
@@ -34,7 +32,7 @@ return_code_t read_array(FILE *input_stream, posts_array_t **posts_array) {
     post = NULL;
   }
 
-  if (feof(input_stream)) {
+  if (feof(input_stream) && rc == INPUT_ERROR) {
     rc = OK;
   }
 
@@ -53,12 +51,13 @@ return_code_t read_array(FILE *input_stream, posts_array_t **posts_array) {
 static posts_array_t *create_array(void) {
   long l1dcls = sysconf(_SC_LEVEL1_DCACHE_LINESIZE);
   if (l1dcls == -1) {
-      l1dcls = sizeof(void *);
+    l1dcls = sizeof(void *);
   }
 
   posts_array_t *array = calloc(1, sizeof(posts_array_t));
 
-  int rc = posix_memalign((void **)&array->data, l1dcls, INIT_SIZE * sizeof(post_t *));
+  int rc = posix_memalign((void **)&array->data, l1dcls,
+                          INIT_SIZE * sizeof(post_t *));
   if (rc != OK) {
     array->data = malloc(INIT_SIZE * sizeof(post_t *));
     if (!array->data) {
@@ -106,4 +105,3 @@ void free_array(posts_array_t *array) {
   free(array->data);
   free(array);
 }
-

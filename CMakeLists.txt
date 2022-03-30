@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(hw2)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -Wall -Wextra -Werror -Wpedantic")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Wpedantic")
 
 option(LINTERS "Enable linters" ON)
 option(WITH_MEMCHECK "Enable memory check" ON)
@@ -29,7 +29,7 @@ add_executable(${PROJECT_NAME} project/src/main.c project/src/utils.c)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${POSTS_LIB_LIBRARIES})
 target_include_directories(${PROJECT_NAME} PUBLIC project/inc)
 
-#add_subdirectory(project/tests)
+add_subdirectory(project/tests)
 
 if(WITH_MEMCHECK)
     add_custom_target(memcheck ALL COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/memtest.sh
