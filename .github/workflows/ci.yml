@@ -62,15 +62,13 @@ jobs:
         echo "**************************** TESTING SEQUENTIAL IMPLEMENTATION ****************************"
         cmake -B build -DTESTING=ON -DCOVERAGE=ON
         make -C build test
-        apt-get install -y gcovr
-        gcovr -x -o ./build/coverage_report_seq.xml
     - name: Test parallel algorithm
       run: |
         echo "**************************** TESTING PARALLEL IMPLEMENTATION ****************************"
         cmake -B build -DPARALLEL=ON
         make -C build test
         apt-get install -y gcovr
-        gcovr -x -o ./build/coverage_report_paral.xml
+        gcovr -x -o ./build/coverage_report.xml
     - name: Test time
       run: |
         echo "****************************** TIME PARALLEL IMPLEMENTATION ******************************"
@@ -95,7 +93,7 @@ jobs:
       uses: codecov/codecov-action@v2
       with:
         token: 81ca858b-d5ea-41bf-96f3-2db485fada4d
-        files: coverage_report_seq.xml coverage_report_paral.xml
+        files: coverage_report.xml
         
 
   sanitizers:
