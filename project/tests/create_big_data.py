@@ -23,7 +23,7 @@ MAX_YEAR = 2022
 
 PRECISION = 2
 
-if len(sys.argv) != REQ_NUM_ARGS:
+if len(sys.argv) < REQ_NUM_ARGS:
     print(HELP_MSG)
     exit(1)
 
