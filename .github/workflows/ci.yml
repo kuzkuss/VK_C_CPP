@@ -6,7 +6,7 @@ jobs:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
-      - run: apt install -y clang-format
+      - run: apt-get install -y clang-format
       - run: cmake -B build
       - run: make -C build check
 
@@ -36,7 +36,7 @@ jobs:
     - name: Fetch
       uses: actions/checkout@v2
     - name: Install
-      run: apt install -y clang-tools
+      run: apt-get install -y clang-tools
     - name: Check build sequential implementation
       run: |
           echo "************************** CHECK BUILD SEQUENTIAL IMPLEMENTATION **************************"
@@ -56,7 +56,7 @@ jobs:
     - name: Fetch
       uses: actions/checkout@v2
     - name: Install
-      run: apt install -y python3
+      run: apt-get update
     - name: Test sequential algorithm
       run: |
         echo "**************************** TESTING SEQUENTIAL IMPLEMENTATION ****************************"
