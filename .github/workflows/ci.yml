@@ -55,8 +55,8 @@ jobs:
     steps:
     - name: Fetch
       uses: actions/checkout@v2
-      with:
-          submodules: recursive
+    - name: Install
+      run: apt install -y python3
     - name: Test sequential algorithm
       run: |
         echo "**************************** TESTING SEQUENTIAL IMPLEMENTATION ****************************"
