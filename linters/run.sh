@@ -28,9 +28,9 @@ print_header "RUN clang-tidy"
 check_log "clang-tidy ../project/posts_lib/src/*.c ../project/src/*.c ../project/inc/*.h ../project/posts_lib/inc/*.h -warnings-as-errors=* -extra-arg=-std=c99 -- -I../project/inc -I../project/posts_lib/inc" "Error (?:reading|while processing)"
 
 print_header "RUN cpplint"
-check_log "cpplint ../project/posts_lib/src/*.c ../project/src/*.c ../project/inc/*.h ../project/posts_lib/inc/*.h ../project/tests/src/*.cpp" "Can't open for reading"
+check_log "cpplint ../project/posts_lib/src/*.c ../project/src/*.c ../project/inc/*.h ../project/posts_lib/inc/*.h ../project/tests/src/*.cpp ../project/tests/*.cpp" "Can't open for reading"
 
 print_header "RUN clang-format"
-check_log "clang-format ../project/posts_lib/src/*.c ../project/src/*.c ../project/inc/*.h ../project/posts_lib/inc/*.h ../project/tests/src/*.cpp -dry-run -Werror -style=Google" "Error (?:reading|while processing)"
+check_log "clang-format ../project/posts_lib/src/*.c ../project/src/*.c ../project/inc/*.h ../project/posts_lib/inc/*.h ../project/tests/src/*.cpp ../project/tests/*.cpp -dry-run -Werror -style=Google" "Error (?:reading|while processing)"
 
 print_header "SUCCESS"

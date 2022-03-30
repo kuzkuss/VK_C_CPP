@@ -1,5 +1,5 @@
-#ifndef TP_C_CPP_PROJECT_POSTS_LIB_INC_RETURN_CODES_H_
-#define TP_C_CPP_PROJECT_POSTS_LIB_INC_RETURN_CODES_H_
+#ifndef PROJECT_POSTS_LIB_INC_RETURN_CODES_H_
+#define PROJECT_POSTS_LIB_INC_RETURN_CODES_H_
 
 typedef enum {
   OK,
@@ -14,4 +14,4 @@ typedef enum {
 
 void check_error(int rc);
 
-#endif  // TP_C_CPP_PROJECT_POSTS_LIB_INC_RETURN_CODES_H_
+#endif  // PROJECT_POSTS_LIB_INC_RETURN_CODES_H_
