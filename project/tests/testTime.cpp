@@ -43,7 +43,7 @@ return_code_t time_measure(int argc, char *argv[]) {
     return rc;
   }
 
-  std::cout << "Average time of work is: " << sum_duraction / float(REPEATS)
+  std::cout << "AVERAGE TIME OF WORK IS: " << sum_duraction / float(REPEATS)
             << "ms\n";
 
   free(filename);
