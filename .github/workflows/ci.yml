@@ -74,7 +74,7 @@ jobs:
     - name: Test time
       run: |
         echo "****************************** TIME PARALLEL IMPLEMENTATION ******************************"
-        ./project/tests/create_big_data.py build/project/tests/data.txt 50000
+        python3 project/tests/create_big_data.py build/project/tests/data.txt 50000
         ./build/project/tests/time_test -f data.txt
         echo "***************************** TIME SEQUENTIAL IMPLEMENTATION *****************************"
         cmake -B build -DPARALLEL=OFF -DLINTERS=OFF -DWITH_MEMCHECK=OFF
@@ -83,7 +83,7 @@ jobs:
     - name: Stress Test
       run: |
         echo "*************************************** STRESS TEST ***************************************"
-        project/tests/create_big_data.py build/project/tests/big_data.txt
+        python3 project/tests/create_big_data.py build/project/tests/big_data.txt
         ./build/hw2 -f build/project/tests/big_data.txt > out_sequential.txt
         cmake -B build -DPARALLEL=ON
         make -C build
