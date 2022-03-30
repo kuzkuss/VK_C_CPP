@@ -35,6 +35,7 @@ jobs:
     steps:
     - name: Fetch
       uses: actions/checkout@v2
+    - name: Install
       run: apt install -y clang-tools
     - name: Check build sequential implementation
       run: |
