@@ -15,27 +15,37 @@ jobs:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     needs: [check]
     steps:
-    - uses: actions/checkout@v2
-    - run: echo "***************************** BUILD SEQUENTIAL IMPLEMENTATION *****************************"
-    - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
-    - run: make -C build
-    - run: echo "****************************** BUILD PARALLEL IMPLEMENTATION ******************************"
-    - run: cmake -B build -DPARALLEL=ON
-    - run: make -C build
+    - name: Fetch
+      uses: actions/checkout@v2
+    - name: Build sequential implementation
+      run: |
+          echo "***************************** BUILD SEQUENTIAL IMPLEMENTATION *****************************"
+          cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+          make -C build
+    - name: Build parallel implementation
+      run: |
+          echo "****************************** BUILD PARALLEL IMPLEMENTATION ******************************"
+          cmake -B build -DPARALLEL=ON
+          make -C build
 
   buildcheck:
     runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     needs: [build]
     steps:
-    - uses: actions/checkout@v2
-    - run: apt install -y clang-tools
-    - run: echo "************************** CHECK BUILD SEQUENTIAL IMPLEMENTATION **************************"
-    - run: cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
-    - run: scan-build make -C build
-    - run: echo "*************************** CHECK BUILD PARALLEL IMPLEMENTATION ***************************"
-    - run: cmake -B build -DPARALLEL=ON
-    - run: scan-build make -C build
+    - name: Fetch
+      uses: actions/checkout@v2
+      run: apt install -y clang-tools
+    - name: Check build sequential implementation
+      run: |
+          echo "************************** CHECK BUILD SEQUENTIAL IMPLEMENTATION **************************"
+          cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+          scan-build make -C build
+    - name: Check build parallel implementation
+      run: |
+          echo "*************************** CHECK BUILD PARALLEL IMPLEMENTATION ***************************"
+          cmake -B build -DPARALLEL=ON
+          scan-build make -C build
 
   test:
     runs-on: ubuntu-latest
@@ -43,7 +53,7 @@ jobs:
     needs: [buildcheck]
     steps:
     - name: Fetch
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
       with:
           submodules: recursive
     - name: Test sequential algorithm
@@ -61,7 +71,7 @@ jobs:
         apt-get install -y gcovr
         gcovr -x -o ./build/coverage_report_paral.xml
     - name: Test time
-      run:
+      run: |
         echo "****************************** TIME PARALLEL IMPLEMENTATION ******************************"
         ./project/tests/create_big_data.py build/project/tests/data.txt 50000
         ./build/project/tests/time_test -f data.txt
@@ -70,7 +80,7 @@ jobs:
         make -C build
         ./build/project/tests/time_test -f data.txt
     - name: Stress Test
-      run:
+      run: |
         echo "*************************************** STRESS TEST ***************************************"
         project/tests/create_big_data.py build/project/tests/big_data.txt
         ./build/hw2 -f build/project/tests/big_data.txt > out_sequential.txt
@@ -90,24 +100,34 @@ jobs:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     needs: [test]
     steps:
-      - uses: actions/checkout@v2
-      - run: echo "**************************** SANITIZE SEQUENTIAL IMPLEMENTATION ***************************"
-      - run: cmake -B build -DSANITIZERS=ON -DTESTING=ON
-      - run: make -C build test
-      - run: echo "**************************** SANITIZE PARALLEL IMPLEMENTATION ***************************"
-      - run: cmake -B build -DPARALLEL=ON
-      - run: make -C build test
+    - name: Fetch
+      uses: actions/checkout@v2
+    - name: Sanitize sequential implementation
+      run: |
+          echo "**************************** SANITIZE SEQUENTIAL IMPLEMENTATION ***************************"
+          cmake -B build -DSANITIZERS=ON -DTESTING=ON
+          make -C build test
+    - name: Sanitize parallel implementation
+      run: |
+          echo "**************************** SANITIZE PARALLEL IMPLEMENTATION ***************************"
+          cmake -B build -DPARALLEL=ON
+          make -C build test
 
   memtest:
     runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     needs: [sanitizers]
     steps:
-      - uses: actions/checkout@v2
-      - run: echo "************************** MEMORY CHECK SEQUENTIAL IMPLEMENTATION *************************"
-      - run: cmake -B build
-      - run: make -C build memcheck
-      - run: echo "*************************** MEMORY CHECK PARALLEL IMPLEMENTATION **************************"
-      - run: cmake -B build -DPARALLEL=ON
-      - run: make -C build memcheck
+    - name: Fetch
+      uses: actions/checkout@v2
+    - name: Memory check sequential implementation
+      run: |
+          echo "************************** MEMORY CHECK SEQUENTIAL IMPLEMENTATION *************************"
+          cmake -B build
+          make -C build memcheck
+    - name: Memory check parallel implementation
+      run: |
+          echo "*************************** MEMORY CHECK PARALLEL IMPLEMENTATION **************************"
+          cmake -B build -DPARALLEL=ON
+          make -C build memcheck
 
