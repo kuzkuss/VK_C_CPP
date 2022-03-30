@@ -74,6 +74,8 @@ jobs:
     - name: Test time
       run: |
         echo "****************************** TIME PARALLEL IMPLEMENTATION ******************************"
+        cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF
+        make -C build
         python3 project/tests/create_big_data.py build/project/tests/data.txt 50000
         ./build/project/tests/time_test -f data.txt
         echo "***************************** TIME SEQUENTIAL IMPLEMENTATION *****************************"
