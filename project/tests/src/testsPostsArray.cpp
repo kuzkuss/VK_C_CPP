@@ -212,19 +212,6 @@ TEST(readPostsArray, incorrectDateYear) {
   fclose(inputStream);
 }
 
-TEST(readPostsArray, negativeDateYear) {
-  char strPosts[] = "1 4.2 128 02.03.-1 3";
-
-  FILE *inputStream = fmemopen(strPosts, sizeof(strPosts), "r");
-  ASSERT_NE(inputStream, nullptr);
-
-  posts_array_t *postsArray = nullptr;
-
-  EXPECT_EQ(read_array(inputStream, &postsArray), INPUT_ERROR);
-
-  fclose(inputStream);
-}
-
 TEST(readPostsArray, incorrectLastGrade) {
   char strPosts[] = "1 4.2 128 02.03.2022 aaa";
 
@@ -285,15 +272,13 @@ TEST(readPostsArray, correctDataOneRecord) {
 
   posts_array_t *postsArray = nullptr;
 
-  avg_grade_t avgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                          .average_grade = 4.2};
-
   date_t date = {.day = 2, .month = 3, .year = 2022};
 
-  post_t post = {.votes = 128,
-                 .avg_grade = avgGrade,
+  post_t post = {.id = 1,
+                 .votes = 128,
+                 .avg_grade = 4.2,
+                 .is_correct_avg_grade = true,
                  .last_grade = 3,
-                 .id = 1,
                  .date = date};
 
   post_t *data[] = {&post};
@@ -307,14 +292,14 @@ TEST(readPostsArray, correctDataOneRecord) {
   EXPECT_EQ(expectedArray.capacity, postsArray->capacity);
 
   for (size_t i = 0; i < postsArray->size; ++i) {
+    EXPECT_EQ(expectedArray.data[i]->id, postsArray->data[i]->id);
     EXPECT_EQ(expectedArray.data[i]->votes, postsArray->data[i]->votes);
-    EXPECT_EQ(expectedArray.data[i]->avg_grade.kind_avg_grade,
-              postsArray->data[i]->avg_grade.kind_avg_grade);
-    EXPECT_NEAR(expectedArray.data[i]->avg_grade.average_grade,
-                postsArray->data[i]->avg_grade.average_grade, EPS);
+    EXPECT_NEAR(expectedArray.data[i]->avg_grade,
+                postsArray->data[i]->avg_grade, EPS);
+    EXPECT_EQ(expectedArray.data[i]->is_correct_avg_grade,
+              postsArray->data[i]->is_correct_avg_grade);
     EXPECT_EQ(expectedArray.data[i]->last_grade,
               postsArray->data[i]->last_grade);
-    EXPECT_EQ(expectedArray.data[i]->id, postsArray->data[i]->id);
     EXPECT_EQ(expectedArray.data[i]->date.day, postsArray->data[i]->date.day);
     EXPECT_EQ(expectedArray.data[i]->date.month,
               postsArray->data[i]->date.month);
@@ -333,14 +318,13 @@ TEST(readPostsArray, correctDataOneRecordNoGrades) {
 
   posts_array_t *postsArray = nullptr;
 
-  avg_grade_t avgGrade = {.kind_avg_grade = ZERO_GRADES, .no_grade = 0};
-
   date_t date = {.day = 2, .month = 3, .year = 2022};
 
-  post_t post = {.votes = 0,
-                 .avg_grade = avgGrade,
+  post_t post = {.id = 1,
+                 .votes = 0,
+                 .avg_grade = 0.f,
+                 .is_correct_avg_grade = false,
                  .last_grade = 1,
-                 .id = 1,
                  .date = date};
 
   post_t *data[] = {&post};
@@ -354,14 +338,14 @@ TEST(readPostsArray, correctDataOneRecordNoGrades) {
   EXPECT_EQ(expectedArray.capacity, postsArray->capacity);
 
   for (size_t i = 0; i < postsArray->size; ++i) {
+    EXPECT_EQ(expectedArray.data[i]->id, postsArray->data[i]->id);
     EXPECT_EQ(expectedArray.data[i]->votes, postsArray->data[i]->votes);
-    EXPECT_EQ(expectedArray.data[i]->avg_grade.kind_avg_grade,
-              postsArray->data[i]->avg_grade.kind_avg_grade);
-    EXPECT_NEAR(expectedArray.data[i]->avg_grade.average_grade,
-                postsArray->data[i]->avg_grade.average_grade, EPS);
+    EXPECT_NEAR(expectedArray.data[i]->avg_grade,
+                postsArray->data[i]->avg_grade, EPS);
+    EXPECT_EQ(expectedArray.data[i]->is_correct_avg_grade,
+              postsArray->data[i]->is_correct_avg_grade);
     EXPECT_EQ(expectedArray.data[i]->last_grade,
               postsArray->data[i]->last_grade);
-    EXPECT_EQ(expectedArray.data[i]->id, postsArray->data[i]->id);
     EXPECT_EQ(expectedArray.data[i]->date.day, postsArray->data[i]->date.day);
     EXPECT_EQ(expectedArray.data[i]->date.month,
               postsArray->data[i]->date.month);
@@ -380,15 +364,13 @@ TEST(readPostsArray, correctDataSeveralRecords) {
 
   posts_array_t *postsArray = nullptr;
 
-  avg_grade_t avgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                          .average_grade = 4.2};
-
   date_t date = {.day = 2, .month = 3, .year = 2022};
 
-  post_t firstPost = {.votes = 128,
-                      .avg_grade = avgGrade,
+  post_t firstPost = {.id = 1,
+                      .votes = 128,
+                      .avg_grade = 4.2,
+                      .is_correct_avg_grade = true,
                       .last_grade = 3,
-                      .id = 1,
                       .date = date};
 
   post_t secondPost = firstPost;
@@ -404,14 +386,14 @@ TEST(readPostsArray, correctDataSeveralRecords) {
   EXPECT_EQ(expectedArray.capacity, postsArray->capacity);
 
   for (size_t i = 0; i < postsArray->size; ++i) {
+    EXPECT_EQ(expectedArray.data[i]->id, postsArray->data[i]->id);
     EXPECT_EQ(expectedArray.data[i]->votes, postsArray->data[i]->votes);
-    EXPECT_EQ(expectedArray.data[i]->avg_grade.kind_avg_grade,
-              postsArray->data[i]->avg_grade.kind_avg_grade);
-    EXPECT_NEAR(expectedArray.data[i]->avg_grade.average_grade,
-                postsArray->data[i]->avg_grade.average_grade, EPS);
+    EXPECT_NEAR(expectedArray.data[i]->avg_grade,
+                postsArray->data[i]->avg_grade, EPS);
+    EXPECT_EQ(expectedArray.data[i]->is_correct_avg_grade,
+              postsArray->data[i]->is_correct_avg_grade);
     EXPECT_EQ(expectedArray.data[i]->last_grade,
               postsArray->data[i]->last_grade);
-    EXPECT_EQ(expectedArray.data[i]->id, postsArray->data[i]->id);
     EXPECT_EQ(expectedArray.data[i]->date.day, postsArray->data[i]->date.day);
     EXPECT_EQ(expectedArray.data[i]->date.month,
               postsArray->data[i]->date.month);

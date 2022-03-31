@@ -14,18 +14,21 @@
 
 #define CHILD 0
 
-#define unlikely(expr) __builtin_expect(!!(expr), 0)
-
 static void kill_processes(size_t num_processes, const pid_t *processes);
+
 static return_code_t exit_processes(size_t num_processes,
                                     const pid_t *processes);
+
 static return_code_t create_processes_array(long *num_processes,
                                             pid_t **processes,
                                             size_t size_array);
+
 static int *get_shared_memory(void);
+
 static return_code_t cur_count_posts(size_t start, size_t offset,
                                      post_t **const posts_array,
                                      int *shared_res);
+
 static return_code_t generate_processes(const posts_array_t *posts_array,
                                         int *shared_res, size_t num_processes,
                                         pid_t *processes);
@@ -166,18 +169,20 @@ static return_code_t generate_processes(const posts_array_t *posts_array,
 
   return_code_t rc = OK;
 
-  for (size_t i = 0; i < num_processes; ++i) {
+  for (size_t i = 0; !rc && i < num_processes; ++i) {
     pid_t child = fork();
-    if (unlikely(child == FORK_ERROR)) {
-      kill_processes(num_processes, processes);
-      rc = PARALLEL_ERROR;
-      break;
-    } else if (child == CHILD) {
-      rc = cur_count_posts(start, cur_num_posts, posts_array->data, shared_res);
-      exit(rc);
-    } else {
-      processes[i] = child;
-      start += cur_num_posts;
+    switch (child) {
+      case FORK_ERROR:
+        kill_processes(i, processes);
+        rc = PARALLEL_ERROR;
+        break;
+      case CHILD:
+        rc = cur_count_posts(start, cur_num_posts, posts_array->data,
+                             shared_res);
+        exit(rc);
+      default:
+        processes[i] = child;
+        start += cur_num_posts;
     }
     if (i == 0 && child == CHILD) {
       cur_num_posts -= posts_array->size % num_processes;

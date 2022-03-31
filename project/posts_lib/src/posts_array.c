@@ -9,6 +9,7 @@
 #define STEP 2
 
 static posts_array_t *create_array(void);
+
 static return_code_t append(posts_array_t *array, post_t *new_element);
 
 return_code_t read_array(FILE *input_stream, posts_array_t **posts_array) {

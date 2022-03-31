@@ -60,12 +60,12 @@ jobs:
     - name: Test sequential algorithm
       run: |
         echo "**************************** TESTING SEQUENTIAL IMPLEMENTATION ****************************"
-        cmake -B build -DTESTING=ON -DCOVERAGE=ON
+        cmake -B build -DTESTING=ON
         make -C build test
     - name: Test parallel algorithm
       run: |
         echo "**************************** TESTING PARALLEL IMPLEMENTATION ****************************"
-        cmake -B build -DPARALLEL=ON
+        cmake -B build -DPARALLEL=ON -DCOVERAGE=ON
         make -C build test
         apt-get install -y gcovr
         gcovr -x -o ./build/coverage_report.xml
@@ -74,7 +74,7 @@ jobs:
         echo "****************************** TIME PARALLEL IMPLEMENTATION ******************************"
         cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF -DTESTING=OFF -DCOVERAGE=OFF
         make -C build
-        python3 project/tests/create_big_data.py data.txt 400000
+        python3 project/tests/create_big_data.py data.txt 500000
         ./build/project/tests/time_test -f data.txt
         echo "***************************** TIME SEQUENTIAL IMPLEMENTATION *****************************"
         cmake -B build -DPARALLEL=OFF

@@ -3,30 +3,22 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <sys/types.h>
 
 #include "return_codes.h"
 
 typedef struct {
-  unsigned char day;
-  unsigned char month;
-  short year;
+  u_int8_t day;
+  u_int8_t month;
+  u_int16_t year;
 } date_t;
 
-typedef enum { ZERO_GRADES, CORRECT_AVG_GRADE } kind_avg_grade_t;
-
 typedef struct {
-  kind_avg_grade_t kind_avg_grade;
-  union {
-    float average_grade;
-    int no_grade;
-  };
-} avg_grade_t;
-
-typedef struct {
-  size_t votes;
-  avg_grade_t avg_grade;
-  int last_grade;
-  int id;
+  unsigned int id;
+  unsigned int votes;
+  float avg_grade;
+  bool is_correct_avg_grade;
+  u_int8_t last_grade;
   date_t date;
 } post_t;
 

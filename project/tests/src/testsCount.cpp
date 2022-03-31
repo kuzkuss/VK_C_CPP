@@ -15,26 +15,22 @@ TEST(countRequiredPosts, incorrectPointerResult) {
 }
 
 TEST(countRequiredPosts, noRequiredPosts) {
-  avg_grade_t firstAvgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                               .average_grade = 4.2};
-
   date_t firstDate = {.day = 2, .month = 3, .year = 2020};
-
-  avg_grade_t secondAvgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                                .average_grade = 3.1};
 
   date_t secondDate = {.day = 2, .month = 3, .year = 2022};
 
-  post_t firstPost = {.votes = 128,
-                      .avg_grade = firstAvgGrade,
+  post_t firstPost = {.id = 1,
+                      .votes = 128,
+                      .avg_grade = 4.2,
+                      .is_correct_avg_grade = true,
                       .last_grade = 3,
-                      .id = 1,
                       .date = firstDate};
 
-  post_t secondPost = {.votes = 128,
-                       .avg_grade = secondAvgGrade,
+  post_t secondPost = {.id = 1,
+                       .votes = 128,
+                       .avg_grade = 3.1,
+                       .is_correct_avg_grade = true,
                        .last_grade = 3,
-                       .id = 1,
                        .date = secondDate};
 
   post_t thirdPost = firstPost;
@@ -51,26 +47,21 @@ TEST(countRequiredPosts, noRequiredPosts) {
 }
 
 TEST(countRequiredPosts, oneRequiredPost) {
-  avg_grade_t firstAvgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                               .average_grade = 4.2};
-
   date_t firstDate = {.day = 2, .month = 3, .year = 2022};
-
-  avg_grade_t secondAvgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                                .average_grade = 3.1};
-
   date_t secondDate = {.day = 2, .month = 3, .year = 2022};
 
-  post_t firstPost = {.votes = 128,
-                      .avg_grade = firstAvgGrade,
+  post_t firstPost = {.id = 1,
+                      .votes = 128,
+                      .avg_grade = 4.2,
+                      .is_correct_avg_grade = true,
                       .last_grade = 3,
-                      .id = 1,
                       .date = firstDate};
 
-  post_t secondPost = {.votes = 128,
-                       .avg_grade = secondAvgGrade,
+  post_t secondPost = {.id = 1,
+                       .votes = 128,
+                       .avg_grade = 3.1,
+                       .is_correct_avg_grade = true,
                        .last_grade = 3,
-                       .id = 1,
                        .date = secondDate};
 
   post_t thirdPost = secondPost;
@@ -87,26 +78,22 @@ TEST(countRequiredPosts, oneRequiredPost) {
 }
 
 TEST(countRequiredPosts, severalRequiredPosts) {
-  avg_grade_t firstAvgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                               .average_grade = 4.2};
-
   date_t firstDate = {.day = 2, .month = 3, .year = 2020};
-
-  avg_grade_t secondAvgGrade = {.kind_avg_grade = CORRECT_AVG_GRADE,
-                                .average_grade = 4.3};
 
   date_t secondDate = {.day = 2, .month = 3, .year = 2022};
 
-  post_t firstPost = {.votes = 128,
-                      .avg_grade = firstAvgGrade,
+  post_t firstPost = {.id = 1,
+                      .votes = 128,
+                      .avg_grade = 4.2,
+                      .is_correct_avg_grade = true,
                       .last_grade = 3,
-                      .id = 1,
                       .date = firstDate};
 
-  post_t secondPost = {.votes = 128,
-                       .avg_grade = secondAvgGrade,
+  post_t secondPost = {.id = 1,
+                       .votes = 128,
+                       .avg_grade = 4.3,
+                       .is_correct_avg_grade = true,
                        .last_grade = 3,
-                       .id = 1,
                        .date = secondDate};
 
   post_t thirdPost = secondPost;
