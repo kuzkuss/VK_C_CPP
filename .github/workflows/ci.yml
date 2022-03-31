@@ -74,7 +74,7 @@ jobs:
         echo "****************************** TIME PARALLEL IMPLEMENTATION ******************************"
         cmake -B build -DLINTERS=OFF -DWITH_MEMCHECK=OFF -DTESTING=OFF -DCOVERAGE=OFF
         make -C build
-        python3 project/tests/create_big_data.py data.txt 500000
+        python3 project/tests/create_big_data.py data.txt 5000000
         ./build/project/tests/time_test -f data.txt
         echo "***************************** TIME SEQUENTIAL IMPLEMENTATION *****************************"
         cmake -B build -DPARALLEL=OFF
